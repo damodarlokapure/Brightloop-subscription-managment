@@ -12,6 +12,8 @@ const invoiceRoutes = require('./invoiceRoutes');
 const paymentRoutes = require('./paymentRoutes');
 const receivablesRoutes = require('./receivablesRoutes');
 const adminRoutes = require('./adminRoutes');
+const reportRoutes = require('./reportRoutes');
+const portalRoutes = require('./portalRoutes');
 const { asyncHandler } = require('../utils/asyncHandler');
 
 const router = express.Router();
@@ -34,6 +36,8 @@ router.use('/subscriptions', subscriptionRoutes);
 router.use('/billing', billingRoutes);
 router.use('/invoices', invoiceRoutes);
 router.use('/payments', paymentRoutes);
+router.use('/reports', reportRoutes);
+router.use('/portal', portalRoutes);
 router.use('/receivables', receivablesRoutes);
 router.use('/admin', adminRoutes);
 

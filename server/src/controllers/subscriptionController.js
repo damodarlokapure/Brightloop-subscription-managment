@@ -35,17 +35,18 @@ async function createSubscription(req, res) {
 }
 
 async function listSubscriptions(req, res) {
+  const scopeCustomerId = req.user?.role === 'CUSTOMER' ? req.user.customerId : req.query.customerId;
   const result = await subscriptionService.listSubscriptions({
     page: req.query.page,
     limit: req.query.limit,
-    customerId: req.query.customerId,
+    customerId: scopeCustomerId,
     status: req.query.status
   });
   res.json(result);
 }
 
 async function getSubscription(req, res) {
-  const result = await subscriptionService.getSubscriptionById(req.params.id);
+  const result = await subscriptionService.getSubscriptionById(req.params.id, req.user?.role === 'CUSTOMER' ? req.user.customerId : null);
   res.json(result);
 }
 

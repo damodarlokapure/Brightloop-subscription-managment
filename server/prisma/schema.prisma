@@ -339,6 +339,7 @@ model Subscription {
   @@index([templateId])
   @@index([startDate])
   @@index([expiryDate])
+  @@index([customerId, status, nextBillingDate])
 }
 
 model SubscriptionStatusHistory {
@@ -388,6 +389,8 @@ model Invoice {
   @@index([subscriptionId])
   @@index([issueDate])
   @@index([dueDate])
+  @@index([customerId, status, dueDate])
+  @@index([customerId, issueDate])
 }
 
 model InvoiceLine {
@@ -446,6 +449,8 @@ model Payment {
   @@index([paymentDate])
   @@index([recordedById])
   @@index([method])
+  @@index([invoiceId, paymentDate])
+  @@index([paymentDate, method])
 }
 
 model Counter {
@@ -474,6 +479,7 @@ model AuditLog {
   @@index([entity])
   @@index([action])
   @@index([createdAt])
+  @@index([action, createdAt])
 }
 
 model SubscriptionLine {

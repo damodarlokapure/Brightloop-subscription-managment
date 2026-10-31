@@ -133,7 +133,7 @@ async function listSubscriptions({ page = 1, limit = 25, customerId, status } = 
   };
 }
 
-async function getSubscriptionById(id) {
+async function getSubscriptionById(id, customerId = null) {
   const subscription = await prisma.subscription.findUnique({
     where: { id },
     include: {
@@ -146,6 +146,9 @@ async function getSubscriptionById(id) {
   });
 
   if (!subscription) throw new AppError(404, 'SUBSCRIPTION_NOT_FOUND', 'Subscription not found.');
+  if (customerId && subscription.customerId !== customerId) {
+    throw new AppError(404, 'SUBSCRIPTION_NOT_FOUND', 'Subscription not found.');
+  }
   return subscription;
 }
 
