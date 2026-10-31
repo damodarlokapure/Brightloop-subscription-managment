@@ -1,89 +1,123 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { CreditCard, LayoutDashboard, Package2, ReceiptText, Settings, ShieldCheck, Users } from 'lucide-react';
+import { CreditCard, FileText, Gift, LayoutDashboard, Package2, ReceiptText, Settings, ShieldCheck, Tag, Users, BriefcaseBusiness, CircleDollarSign, TrendingUp } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui';
+import { ProductsPage } from '../pages/admin/products/ProductsPage';
+import { PlansPage } from '../pages/admin/plans/PlansPage';
+import { TaxesPage } from '../pages/admin/taxes/TaxesPage';
+import { DiscountsPage } from '../pages/admin/discounts/DiscountsPage';
+import { StaffPage } from '../pages/admin/staff/StaffPage';
+import { QuotationTemplatesPage } from '../pages/admin/quotation-templates/QuotationTemplatesPage';
+import { CustomersPage, CustomerDetailPage } from '../pages/shared/operations/CustomersPage';
+import { QuotationsPage } from '../pages/shared/operations/QuotationsPage';
+import { SubscriptionsPage, SubscriptionDetailPage } from '../pages/shared/operations/SubscriptionsPage';
+import { InvoicesPage, InvoiceDetailPage } from '../pages/shared/operations/InvoicesPage';
+import { PaymentsPage } from '../pages/shared/operations/PaymentsPage';
+import { OverduePage } from '../pages/shared/operations/OverduePage';
+import { FinanceDashboardPage } from '../pages/shared/finance/FinanceDashboardPage';
 
 const navItems = [
-  { to: '/admin', label: 'Overview', icon: LayoutDashboard },
-  { to: '/admin/customers', label: 'Customers', icon: Users },
-  { to: '/admin/subscriptions', label: 'Subscriptions', icon: Package2 },
-  { to: '/admin/invoices', label: 'Invoices', icon: ReceiptText },
-  { to: '/admin/payments', label: 'Payments', icon: CreditCard },
-  { to: '/admin/settings', label: 'Settings', icon: Settings },
+	{ to: '/admin', label: 'Overview', icon: LayoutDashboard },
+	{ to: '/admin/dashboard', label: 'Dashboard', icon: TrendingUp },
+	{ to: '/admin/customers', label: 'Customers', icon: Users },
+	{ to: '/admin/quotations', label: 'Quotations', icon: FileText },
+	{ to: '/admin/subscriptions', label: 'Subscriptions', icon: BriefcaseBusiness },
+	{ to: '/admin/invoices', label: 'Invoices', icon: ReceiptText },
+	{ to: '/admin/payments', label: 'Payments', icon: CreditCard },
+	{ to: '/admin/overdue', label: 'Overdue', icon: CircleDollarSign },
+	{ to: '/admin/products', label: 'Products', icon: Package2 },
+	{ to: '/admin/plans', label: 'Plans', icon: FileText },
+	{ to: '/admin/taxes', label: 'Taxes', icon: Tag },
+	{ to: '/admin/discounts', label: 'Discounts', icon: Gift },
+	{ to: '/admin/staff', label: 'Staff', icon: Users },
+	{ to: '/admin/templates', label: 'Templates', icon: ReceiptText },
+	{ to: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
 function EmptyDashboard({ title, subtitle }) {
-  return (
-    <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-      <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600">
-        <ShieldCheck className="h-6 w-6" />
-      </div>
-      <h2 className="text-2xl font-semibold text-slate-900">{title}</h2>
-      <p className="mt-2 text-sm text-slate-600">{subtitle}</p>
-    </div>
-  );
+	return (
+		<div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+			<div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600">
+				<ShieldCheck className="h-6 w-6" />
+			</div>
+			<h2 className="text-2xl font-semibold text-slate-900">{title}</h2>
+			<p className="mt-2 text-sm text-slate-600">{subtitle}</p>
+		</div>
+	);
 }
 
 export function AdminLayout() {
-  const { user, logout } = useAuth();
+	const { user, logout } = useAuth();
 
-  return (
-    <div className="app-shell flex bg-slate-100">
-      <aside className="sidebar-glow hidden w-72 shrink-0 flex-col justify-between p-5 text-slate-100 lg:flex">
-        <div>
-          <div className="mb-8 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 text-lg font-semibold text-indigo-200">B</div>
-            <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-indigo-200">Brightloop</p>
-              <p className="text-lg font-semibold">Admin</p>
-            </div>
-          </div>
+	return (
+		<div className="app-shell flex bg-slate-100">
+			<aside className="sidebar-glow hidden w-72 shrink-0 flex-col justify-between p-5 text-slate-100 lg:flex">
+				<div>
+					<div className="mb-8 flex items-center gap-3">
+						<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 text-lg font-semibold text-indigo-200">B</div>
+						<div>
+							<p className="text-sm uppercase tracking-[0.2em] text-indigo-200">Brightloop</p>
+							<p className="text-lg font-semibold">Admin</p>
+						</div>
+					</div>
 
-          <nav className="space-y-2">
-            {navItems.map(({ to, label, icon: Icon }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === '/admin'}
-                className={({ isActive }) =>
-                  ['flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition', isActive ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white'].join(' ')
-                }
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+					<nav className="space-y-2">
+						{navItems.map(({ to, label, icon: Icon }) => (
+							<NavLink
+								key={to}
+								to={to}
+								end={to === '/admin'}
+								className={({ isActive }) =>
+									['flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition', isActive ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white'].join(' ')
+								}
+							>
+								<Icon className="h-4 w-4" />
+								{label}
+							</NavLink>
+						))}
+					</nav>
+				</div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-indigo-200">Signed in</p>
-          <p className="mt-2 text-sm font-semibold text-white">{user.name}</p>
-          <p className="text-xs text-slate-300">{user.email}</p>
-          <Button variant="secondary" className="mt-4 w-full justify-center bg-white text-slate-900 hover:bg-slate-100" onClick={logout}>
-            Log out
-          </Button>
-        </div>
-      </aside>
+				<div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+					<p className="text-xs uppercase tracking-[0.2em] text-indigo-200">Signed in</p>
+					<p className="mt-2 text-sm font-semibold text-white">{user.name}</p>
+					<p className="text-xs text-slate-300">{user.email}</p>
+					<Button variant="secondary" className="mt-4 w-full justify-center bg-white text-slate-900 hover:bg-slate-100" onClick={logout}>
+						Log out
+					</Button>
+				</div>
+			</aside>
 
-      <main className="flex-1 p-4 md:p-6">
-        <div className="mb-6 flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm lg:hidden">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-indigo-600">Brightloop</p>
-            <p className="font-semibold text-slate-900">Admin workspace</p>
-          </div>
-          <Button variant="secondary" onClick={logout}>Logout</Button>
-        </div>
+			<main className="flex-1 p-4 md:p-6">
+				<div className="mb-6 flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm lg:hidden">
+					<div>
+						<p className="text-xs uppercase tracking-[0.2em] text-indigo-600">Brightloop</p>
+						<p className="font-semibold text-slate-900">Admin workspace</p>
+					</div>
+					<Button variant="secondary" onClick={logout}>Logout</Button>
+				</div>
 
-        <Routes>
-          <Route index element={<EmptyDashboard title="Admin overview" subtitle="No operational data has been loaded yet. Configure products, plans, taxes, and subscriptions from the admin console." />} />
-          <Route path="customers" element={<EmptyDashboard title="Customers" subtitle="Customer lifecycle and account management will appear here." />} />
-          <Route path="subscriptions" element={<EmptyDashboard title="Subscriptions" subtitle="Track performance, renewals, and inventory in one place." />} />
-          <Route path="invoices" element={<EmptyDashboard title="Invoices" subtitle="American billing workflows and receivables will be visible here." />} />
-          <Route path="payments" element={<EmptyDashboard title="Payments" subtitle="Settlement and payment status will be reported here." />} />
-          <Route path="settings" element={<EmptyDashboard title="System settings" subtitle="Security roles, product defaults, and account settings can be configured here." />} />
-        </Routes>
-      </main>
-    </div>
-  );
+				<Routes>
+					<Route index element={<EmptyDashboard title="Admin overview" subtitle="Configure products, plans, taxes, discounts, staff, and quotation templates from the admin console." />} />
+					<Route path="dashboard" element={<FinanceDashboardPage />} />
+					<Route path="customers" element={<CustomersPage />} />
+					<Route path="customers/:customerId" element={<CustomerDetailPage />} />
+					<Route path="quotations" element={<QuotationsPage />} />
+					<Route path="subscriptions" element={<SubscriptionsPage />} />
+					<Route path="subscriptions/:subscriptionId" element={<SubscriptionDetailPage />} />
+					<Route path="invoices" element={<InvoicesPage />} />
+					<Route path="invoices/:invoiceId" element={<InvoiceDetailPage />} />
+					<Route path="payments" element={<PaymentsPage />} />
+					<Route path="overdue" element={<OverduePage />} />
+					<Route path="products" element={<ProductsPage />} />
+					<Route path="plans" element={<PlansPage />} />
+					<Route path="taxes" element={<TaxesPage />} />
+					<Route path="discounts" element={<DiscountsPage />} />
+					<Route path="staff" element={<StaffPage />} />
+					<Route path="templates" element={<QuotationTemplatesPage />} />
+					<Route path="settings" element={<EmptyDashboard title="System settings" subtitle="Security roles, product defaults, and account settings can be configured here." />} />
+				</Routes>
+			</main>
+		</div>
+	);
 }

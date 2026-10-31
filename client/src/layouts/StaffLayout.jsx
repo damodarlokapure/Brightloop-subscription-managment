@@ -1,15 +1,24 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { BarChart3, CreditCard, FileText, LayoutDashboard, Package, Users } from 'lucide-react';
+import { BarChart3, CreditCard, FileText, LayoutDashboard, Package, Users, TrendingUp } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui';
+import { CustomersPage, CustomerDetailPage } from '../pages/shared/operations/CustomersPage';
+import { QuotationsPage } from '../pages/shared/operations/QuotationsPage';
+import { SubscriptionsPage, SubscriptionDetailPage } from '../pages/shared/operations/SubscriptionsPage';
+import { InvoicesPage, InvoiceDetailPage } from '../pages/shared/operations/InvoicesPage';
+import { PaymentsPage } from '../pages/shared/operations/PaymentsPage';
+import { OverduePage } from '../pages/shared/operations/OverduePage';
+import { FinanceDashboardPage } from '../pages/shared/finance/FinanceDashboardPage';
 
 const navItems = [
   { to: '/staff', label: 'Overview', icon: LayoutDashboard },
+  { to: '/staff/dashboard', label: 'Dashboard', icon: TrendingUp },
   { to: '/staff/customers', label: 'Customers', icon: Users },
   { to: '/staff/quotations', label: 'Quotations', icon: FileText },
   { to: '/staff/subscriptions', label: 'Subscriptions', icon: Package },
+  { to: '/staff/invoices', label: 'Invoices', icon: FileText },
   { to: '/staff/payments', label: 'Payments', icon: CreditCard },
-  { to: '/staff/reports', label: 'Reports', icon: BarChart3 },
+  { to: '/staff/overdue', label: 'Overdue', icon: BarChart3 },
 ];
 
 function EmptyDashboard({ title, subtitle }) {
@@ -74,11 +83,16 @@ export function StaffLayout() {
 
         <Routes>
           <Route index element={<EmptyDashboard title="Operations overview" subtitle="This dashboard is ready for customer activity, quotations, invoices, and team performance widgets." />} />
-          <Route path="customers" element={<EmptyDashboard title="Customers" subtitle="Manage accounts and customer data from the staff workspace." />} />
-          <Route path="quotations" element={<EmptyDashboard title="Quotations" subtitle="Create and manage pricing proposals and renewals." />} />
-          <Route path="subscriptions" element={<EmptyDashboard title="Subscriptions" subtitle="Review live subscription health and plan adoption." />} />
-          <Route path="payments" element={<EmptyDashboard title="Payments" subtitle="Review collections, payment status, and exceptions." />} />
-          <Route path="reports" element={<EmptyDashboard title="Reports" subtitle="Staff-facing dashboards and revenue insights will appear here." />} />
+          <Route path="dashboard" element={<FinanceDashboardPage />} />
+          <Route path="customers" element={<CustomersPage />} />
+          <Route path="customers/:customerId" element={<CustomerDetailPage />} />
+          <Route path="quotations" element={<QuotationsPage />} />
+          <Route path="subscriptions" element={<SubscriptionsPage />} />
+          <Route path="subscriptions/:subscriptionId" element={<SubscriptionDetailPage />} />
+          <Route path="invoices" element={<InvoicesPage />} />
+          <Route path="invoices/:invoiceId" element={<InvoiceDetailPage />} />
+          <Route path="payments" element={<PaymentsPage />} />
+          <Route path="overdue" element={<OverduePage />} />
         </Routes>
       </main>
     </div>

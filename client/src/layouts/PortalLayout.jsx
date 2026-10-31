@@ -1,13 +1,14 @@
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { CreditCard, Files, LayoutDashboard, Receipt, UserCircle2 } from 'lucide-react';
+import { CreditCard, Files, LayoutDashboard, Receipt, UserCircle2, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui';
+import { CustomerDashboardPage, CustomerInvoiceDetailPage, CustomerInvoicesPage, CustomerPlansPage, CustomerProfilePage, CustomerSubscriptionDetailPage, CustomerSubscriptionsPage } from '../pages/portal/CustomerPortalPages';
 
 const navItems = [
   { to: '/portal', label: 'Overview', icon: LayoutDashboard },
   { to: '/portal/subscriptions', label: 'Subscriptions', icon: Files },
+  { to: '/portal/plans', label: 'Browse plans', icon: ShoppingBag },
   { to: '/portal/invoices', label: 'Invoices', icon: Receipt },
-  { to: '/portal/payments', label: 'Payments', icon: CreditCard },
   { to: '/portal/profile', label: 'Profile', icon: UserCircle2 },
 ];
 
@@ -72,11 +73,13 @@ export function PortalLayout() {
         </div>
 
         <Routes>
-          <Route index element={<EmptyDashboard title="Customer overview" subtitle="Your subscriptions, invoices, and payment activity will appear here." />} />
-          <Route path="subscriptions" element={<EmptyDashboard title="Subscriptions" subtitle="Monitor your active and upcoming subscription commitments." />} />
-          <Route path="invoices" element={<EmptyDashboard title="Invoices" subtitle="Track outstanding balances and recent billing history." />} />
-          <Route path="payments" element={<EmptyDashboard title="Payments" subtitle="Review completed and pending payment activity." />} />
-          <Route path="profile" element={<EmptyDashboard title="Profile" subtitle="Update your company details and account preferences." />} />
+          <Route index element={<CustomerDashboardPage />} />
+          <Route path="subscriptions" element={<CustomerSubscriptionsPage />} />
+          <Route path="subscriptions/:subscriptionId" element={<CustomerSubscriptionDetailPage />} />
+          <Route path="plans" element={<CustomerPlansPage />} />
+          <Route path="invoices" element={<CustomerInvoicesPage />} />
+          <Route path="invoices/:invoiceId" element={<CustomerInvoiceDetailPage />} />
+          <Route path="profile" element={<CustomerProfilePage />} />
         </Routes>
       </main>
     </div>
